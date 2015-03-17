@@ -1,4 +1,5 @@
-from flask import render_template, flash, redirect
+from flask import render_template, flash, redirect, url_for
+from flask.ext.bootstrap import Bootstrap
 from app import app
 from .forms import CreateEventForm
 import requests
@@ -21,7 +22,7 @@ def create_event():
           data=json.dumps(event_payload))
       flash('Creating graphite event with tags="%s", title=%s description=%s' % (
           form.tags.data, form.title.data, form.desc.data))
-      return redirect('/index')
+      return redirect(url_for('index'))
     return render_template('create_event.html',form=form)
 
 @app.route('/events')
