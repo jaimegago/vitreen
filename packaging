@@ -1,0 +1,42 @@
+#!/bin/bash
+# Packaging using FPM effing pkg mgmt
+description="Vitreen a Graphite Events front end"
+dependencies=""
+license="MIT license"
+maintainer="Jaime Gago"
+name="vitreen"
+prefix="/opt"
+provides="${name}"
+url="https://github.com/jaimegago/vitreen"
+vendor="Vitreen"
+version=$(git log -1 --pretty=format:"%ad %h" --date=short | \
+  sed s/'[[:space:]]'/."$(git log --oneline | wc -l)".git./ | sed s/-//g)
+
+# Dependencies
+fpm_dependencies=""
+for dependency in $dependencies; do
+  fpm_dependencies="$(echo $fpm_dependencies) -d $dependency"
+done
+
+# Create the package
+fpm --verbose --debug \
+  -s dir \
+  -t deb \
+  -a "all" \
+  -n "${name}" \
+  -v "${version}" \
+  --prefix "${prefix}" \
+  --provides "${provides}" \
+  --description "${description}" \
+  --maintainer "${maintainer}" \
+  --vendor "${vendor}" \
+  --url "${url}" \
+  --exclude "*.md" \
+  --exclude "packaging" \
+  --exclude "*.deb" \
+  --exclude "tmp" \
+  --license "${license}" \
+  --deb-user sensu \
+  --deb-group sensu \
+  ${fpm_dependencies} \
+  vitreen
