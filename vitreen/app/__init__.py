@@ -3,7 +3,7 @@ import json
 import sys
 
 app = Flask(__name__)
-
+VITREEN_VERSION = '0.0.1'
 # TODO
 # Look for config files in multiple places
 # Handle prod vs dev config
@@ -24,5 +24,6 @@ for key in json_config:
     sys.exit(1)
 
 app.config.update(json_config)
+app.config['VITREEN_VERSION'] = VITREEN_VERSION
 
 from app import views

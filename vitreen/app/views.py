@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, jsonify
 from flask.ext.bootstrap import Bootstrap
 from app import app
 from .forms import CreateEventForm
@@ -37,3 +37,18 @@ def events():
     'events/get_data'))
   events = events_data.json()
   return render_template('events_listing.html', events=events)
+
+@app.route('/status')
+def status():
+  status = {}
+  status['vitreen_version'] = app.config['VITREEN_VERSION']
+  now = int(time.time())
+  graphite_events_api_response = requests.get(urlparse.urljoin
+      (app.config['GRAPHITE_SERVER_URL'],'events/?from=' + str(now)))
+  if graphite_events_api_response.status_code == 200:
+    status['graphite_events_api_available'] = True
+  else:
+    status['graphite_events_api_available'] = False
+  return jsonify(status)
+    
+
