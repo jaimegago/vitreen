@@ -5,6 +5,7 @@ from .forms import CreateEventForm
 import requests
 import json
 import urlparse
+import time
 
 @app.route('/')
 @app.route('/index')
@@ -15,8 +16,12 @@ def index():
 def create_event():
   form = CreateEventForm()
   if form.validate_on_submit():
-    event_payload = {'what': form.title.data, 'tags': form.tags.data,
-        'data': form.desc.data}
+    event_payload = {
+        'what': form.title.data,
+        'when': time.mktime(form.when.data.timetuple()),
+        'tags': form.tags.data,
+        'data': form.desc.data
+      }
     post_request = requests.post(
         urlparse.urljoin(app.config['GRAPHITE_SERVER_URL'], 'events/'),
         data=json.dumps(event_payload)
