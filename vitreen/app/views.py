@@ -42,6 +42,7 @@ def events():
 def status():
   status = {}
   status['vitreen_version'] = app.config['VITREEN_VERSION']
+  status['graphite_events_endpoint'] = app.config['GRAPHITE_SERVER_URL']
   now = int(time.time())
   graphite_events_api_response = requests.get(urlparse.urljoin
       (app.config['GRAPHITE_SERVER_URL'],'events/?from=' + str(now)))
