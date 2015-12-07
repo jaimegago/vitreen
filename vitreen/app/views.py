@@ -17,7 +17,7 @@ def create_event():
   form = CreateEventForm()
   if form.validate_on_submit():
     event_payload = {
-        'what': form.title.data,
+        'what': form.event_title.data,
         'when': time.mktime(form.when.data.timetuple()),
         'tags': form.tags.data,
         'data': form.desc.data
@@ -26,8 +26,8 @@ def create_event():
         urlparse.urljoin(app.config['GRAPHITE_SERVER_URL'], 'events/'),
         data=json.dumps(event_payload)
       )
-    flash('Creating graphite event with tags="%s", title=%s description=%s' % (
-      form.tags.data, form.title.data, form.desc.data))
+    flash('Creating graphite event with tags="%s", title=%s description=%s, time=%s' % (
+      form.tags.data, form.event_title.data, form.desc.data, form.when.data))
     return redirect(url_for('index'))
   return render_template('create_event.html',form=form)
 
@@ -51,5 +51,3 @@ def status():
   else:
     status['graphite_events_api_available'] = False
   return jsonify(status)
-    
-

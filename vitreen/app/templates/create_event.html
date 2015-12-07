@@ -1,6 +1,103 @@
 {% extends "base.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
 {% block content %}
-<h1>Graphite Events Creation</h1>
-{{ wtf.quick_form(form) }}
+  {% block scripts %}
+    {{super()}}
+    <script type="text/javascript" src="{{ url_for('static', filename='jquery/js/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='moment/js/moment.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}"></script>
+  {% endblock %}
+  {% block styles %}
+    {{super()}}
+    <link href="{{ url_for('static', filename='bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
+  {% endblock %}
+
+  <form action="{{ url_for('create_event')}}" method="post" name="create_event" class="form-vertical">
+  {{ form.hidden_tag() }}
+  <legend>Graphite Events Creation</legend>
+  <fieldset>
+    <div class="container">
+      <div class="row">
+        <div class='col-sm-6'>
+          <div class="form-group {% if form.event_title.errors %} has-error {% endif %}">
+            <label>Title</label>
+              {{ form.event_title(size=80, class="form-control") }}
+              <span class="help-block">Event title</span>
+              {% for error in form.event_title.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+              {% endfor %}<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+  <fieldset>
+    <div class="container">
+      <div class="row">
+        <div class='col-sm-6'>
+          <div class="form-group {% if form.desc.errors %} has-error {% endif %}">
+            <label>Description</label>
+              {{ form.desc(size=80, class="form-control") }}
+              <span class="help-block">Event description</span>
+              {% for error in form.desc.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+              {% endfor %}<br>
+             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+  <fieldset>
+    <div class="container">
+      <div class="row">
+        <div class='col-sm-6'>
+          <div class="form-group {% if form.tags.errors %} has-error {% endif %}">
+            <label>Tags</label>
+              {{ form.tags(size=80, placeholder="foo,bar,baz", class="form-control") }}
+              <span class="help-block">Comma delimited tags</span>
+              {% for error in form.tags.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+              {% endfor %}<br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+<div class="container">
+    <div class="row">
+        <div class='col-sm-6'>
+          <div class="form-group {% if form.when.errors %} has-error {% endif %}">
+                <label>Event Time Stamp</label>
+                <div class='input-group date' id='datetimepicker1'>
+                    {{ form.when(size=80, class="form-control") }}
+                    <span class="input-group-addon">
+                      <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+                    <span class="help-block">Time stamp for the event (YYYY-MM-DD HH:MM:SS)</span>
+              {% for error in form.when.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+              {% endfor %}<br>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker1').datetimepicker({
+                  useCurrent: true,
+                  format: 'YYYY-MM-DD HH:mm:ss'
+                  });
+            });
+        </script>
+    </div>
+</div>
+</fieldset>
+<div class="container">
+    <div class="row">
+        <div class='col-sm-6'>
+    <button type="submit" class="btn btn-primary btn-lg" value="Create Event">Create Event</button>
+                </div>
+            </div>
+        </div>
+</form>
 {% endblock %}

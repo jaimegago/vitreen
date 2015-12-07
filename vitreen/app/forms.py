@@ -7,12 +7,12 @@ from datetime import datetime
 
 class CreateEventForm(Form):
   tags  = StringField('Tags', validators=[DataRequired()])
-  title = StringField('Title', validators=[DataRequired()])
+  event_title = StringField('Title', validators=[DataRequired()])
   desc  = StringField('Description', validators=[DataRequired()])
-  when  = DateTimeField('When', default=datetime.now(), validators=[
+  when  = DateTimeField('When', validators=[
     DataRequired(), DateRange(
-        min=datetime(2000, 1, 1),
-        max=datetime.now()
-      )
-    ])
-  submit = SubmitField('Submit')
+          min=datetime(2000, 1, 1),
+          max=datetime.now()
+        )
+      ])
+  submit = SubmitField('submit')

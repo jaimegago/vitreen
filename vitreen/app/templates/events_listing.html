@@ -2,5 +2,11 @@
 
 {% block content %}
 <h1>Graphite Event</h1>
-<p>{{ events }}</p>
+<table>
+{% for event in events %}
+<tr>
+ <th>{{ event }}</th>
+</tr>
+{% endfor %}
+</table>
 {% endblock %}

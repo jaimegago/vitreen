@@ -1,5 +1,8 @@
 {% extends "bootstrap/base.html" %}
-
+{% block styles %}
+{{super()}}
+<link href="static/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+{% endblock %}
 {% block title %}Vitreen{% endblock %}
 
 {% block head %}
