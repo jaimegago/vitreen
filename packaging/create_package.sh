@@ -9,25 +9,13 @@ prefix="/opt/vitreen"
 provides="${name}"
 url="https://github.com/jaimegago/vitreen"
 vendor="Vitreen"
-version=$(grep 'VITREEN_VERSION =' app/__init__.py|cut -d\' -f2)
-#version=$(git log -1 --pretty=format:"%ad %h" --date=short | \
-#  sed s/'[[:space:]]'/."$(git log --oneline | wc -l)".git./ | sed s/-//g)
+version=$(grep 'VITREEN_VERSION =' /vitreen/app/__init__.py|cut -d\' -f2)
 
 # Dependencies
-## Build time deps (assumes python and ruby are installed)
-# TODO:
-# Case in distro and adjust build deps accordingly...
-gem install fpm
-#easy_install pip
-pip install virtualenv
-# OS X 10.11 only
-#brew install gnu-tar
-
-## Runtime deps
-### virtualenv deps
+## virtualenv deps
 virtualenv env
-./env/bin/pip install -r requirements.txt
-###  Hard system deps (will be coded as debian package deps)
+./env/bin/pip install -r /vitreen/requirements.txt
+##  Hard system deps (will be coded as debian package deps)
 fpm_dependencies=""
 for dependency in $dependencies; do
   fpm_dependencies="$(echo $fpm_dependencies) -d $dependency"
