@@ -14,6 +14,7 @@ cleanup() {
 trap cleanup EXIT
 
 rm -rf "$artifacts"
+docker pull sczizzo/trusty-tool:latest
 docker build -t "$task_name" -f "$dockerfile" .
 docker run --name "$task_name" -dt "$task_name"
 docker cp "$task_name":/packaging "$artifacts"
