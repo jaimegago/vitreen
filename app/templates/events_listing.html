@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Graphite Event</h1>
+<table>
+{% for event in events %}
+<tr>
+ <th>{{ event }}</th>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}
