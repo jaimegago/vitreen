@@ -5,10 +5,13 @@
     <script type="text/javascript" src="{{ url_for('static', filename='jquery/js/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='moment/js/moment.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='bootstrap-tagsinput/js/bootstrap-tagsinput.min.js') }}"></script>
+    {#<script type="text/javascript" src="{{ url_for('static', filename='bootstrap-tagsinput/js/bootstrap-tagsinput.min.js.map') }}"></script>#}
   {% endblock %}
   {% block styles %}
     {{super()}}
     <link href="{{ url_for('static', filename='bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='bootstrap-tagsinput/css/bootstrap-tagsinput.css') }}" rel="stylesheet">
   {% endblock %}
 
   <form action="{{ url_for('create_event')}}" method="post" name="create_event" class="form-vertical">
@@ -54,15 +57,16 @@
         <div class='col-sm-6'>
           <div class="form-group {% if form.tags.errors %} has-error {% endif %}">
             <label>Tags</label>
-              {{ form.tags(size=80, placeholder="foo,bar,baz", class="form-control") }}
-              <span class="help-block">Comma delimited tags</span>
+            <br>
+            {{ form.tags(size=200, class="form-control", **{'data-role':'tagsinput'}) }}
+              <span class="help-block">Event Tags</span>
               {% for error in form.tags.errors %}
-                <span style="color: red;">[{{ error }}]</span>
+              <span style="color: red;">[{{ error }}]</span>
               {% endfor %}<br>
+             </div>
           </div>
         </div>
       </div>
-    </div>
   </fieldset>
 <div class="container">
     <div class="row">
