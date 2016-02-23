@@ -9,7 +9,6 @@ class CreateEventForm(Form):
   tags  = StringField('Tags', validators=[DataRequired()])
   event_title = StringField('Title', validators=[DataRequired()])
   desc  = StringField('Description', validators=[DataRequired()])
-  tags = StringField('Tags', validators=[DataRequired()])
   when  = DateTimeField('When', default=datetime.now(), validators=[
     DataRequired(), DateRange(
           min=datetime(2000, 1, 1),
