@@ -3,12 +3,12 @@ set -x
 set -e
 
 ARTIFACTS="${1:-artifacts}"
+maintainer="${2:-maintainer}"
 
 # Packaging using FPM effing pkg mgmt
 description="Vitreen a Graphite Events front end"
 dependencies=""
 license="MIT license"
-maintainer="Jaime Gago"
 name="vitreen"
 prefix="/opt/vitreen"
 provides="${name}"
