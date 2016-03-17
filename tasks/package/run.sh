@@ -15,6 +15,7 @@ cat << DOCKERFILE > "${dockerfile}"
 FROM ${base_image}
 MAINTAINER ${maintainer}
 ENV DEBIAN_FRONTEND=noninteractive
+ARG BUILD_NUMBER=${BUILD_NUMBER:-1}
 
 COPY . /build
 

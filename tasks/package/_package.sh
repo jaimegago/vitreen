@@ -15,6 +15,7 @@ provides="${name}"
 url="https://github.com/jaimegago/vitreen"
 vendor="Vitreen"
 version=$(grep 'VITREEN_VERSION =' app/__init__.py|cut -d\' -f2)
+version="$version-${BUILD_NUMBER:-1}+$(git rev-parse --short HEAD)"
 
 # Dependencies
 ## virtualenv deps
